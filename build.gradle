@@ -1,0 +1,24 @@
+def projectName = 'jSync'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+dependencies {
+  compile group: 'commons-io', name: 'commons-io', version: '2.4'
+}
+
+repositories {   
+    mavenCentral()
+}
+
+eclipse {
+
+	build
+	
+    classpath {
+       downloadSources=true
+       downloadJavadoc=true
+       sourceCompatibility = 1.8
+    }
+}
