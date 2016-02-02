@@ -55,13 +55,15 @@ public class Client {
 	 */
 	public static void main(String[] args) {
 		try {
-			// open socket
-			socket = new Socket(HOST, PORT);
-
 			// parse args
 			DIRECTORY = args[1];
 			HOST = args[2];
 			PORT = Integer.parseInt(args[3]);
+
+			// open socket
+			socket = new Socket(HOST, PORT);
+
+			logger.info("trying to connect to " + HOST + ":" + PORT);
 
 			// sender or receiver
 			if (args[0].equals("s")) {
