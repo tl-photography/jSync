@@ -14,13 +14,9 @@ package at.tl_photography.jsync.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
@@ -56,11 +52,11 @@ public class Server {
 	 * @throws BadPaddingException
 	 * @throws InvalidKeyException
 	 */
-	public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException,
-			NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+	public static void main(String[] args) throws Exception {
 
 		port = Integer.parseInt(args[0]);
 
+		@SuppressWarnings("resource")
 		ServerSocket serversocket = new ServerSocket(port);
 		logger.info("server socket open, waiting for clients");
 
@@ -95,9 +91,5 @@ public class Server {
 				}
 			}
 		}
-	}
-
-	void test() {
-
 	}
 }
