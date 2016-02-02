@@ -9,7 +9,7 @@
  *                          Version 2.0, January 2004
  *                      http://www.apache.org/licenses/
  */
-package at.tl_photography.jSync.Common;
+package at.tl_photography.jsync.common;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,9 +31,7 @@ public class FileChecker {
 	 * @return the byte[]
 	 */
 	public static String generateMD5(Path path) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(path.toFile());
+		try (FileInputStream fis = new FileInputStream(path.toFile())) {
 			return DigestUtils.md5Hex(fis);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

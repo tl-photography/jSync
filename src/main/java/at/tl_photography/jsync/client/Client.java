@@ -9,7 +9,7 @@
  *                          Version 2.0, January 2004
  *                      http://www.apache.org/licenses/
  */
-package at.tl_photography.jSync.Client;
+package at.tl_photography.jsync.client;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,11 +21,12 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
-import at.tl_photography.jSync.Common.FileChecker;
-import at.tl_photography.jSync.Common.FileInfo;
+import at.tl_photography.jsync.common.FileChecker;
+import at.tl_photography.jsync.common.FileInfo;
 
 /**
  * The Class Client.
@@ -36,13 +37,13 @@ public class Client {
 	private static Logger logger = Logger.getLogger(Client.class.getName());
 
 	/** The host. */
-	public static String HOST = "127.0.0.1";
+	public static String host;
 
 	/** The port. */
-	public static Integer PORT = 81;
+	public static Integer port;
 
 	/** The directory. */
-	public static String DIRECTORY = "D:/TEMP";
+	public static String directory;
 
 	/** The socket. */
 	private static Socket socket;
@@ -52,18 +53,23 @@ public class Client {
 	 *
 	 * @param args
 	 *            the arguments
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws NoSuchPaddingException
+	 *             the no such padding exception
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException {
 		try {
+
 			// parse args
-			DIRECTORY = args[1];
-			HOST = args[2];
-			PORT = Integer.parseInt(args[3]);
+			directory = args[1];
+			host = args[2];
+			port = Integer.parseInt(args[3]);
 
 			// open socket
-			socket = new Socket(HOST, PORT);
+			socket = new Socket(host, port);
 
-			logger.info("trying to connect to " + HOST + ":" + PORT);
+			logger.info("trying to connect to " + host + ":" + port);
 
 			// sender or receiver
 			if (args[0].equals("s")) {
@@ -100,7 +106,7 @@ public class Client {
 			FileInfo info = (FileInfo) ois.readObject();
 			logger.info(info.toString());
 
-			File file = new File(DIRECTORY + info.getPath());
+			File file = new File(directory + info.getPath());
 			if (file.exists()) {
 				logger.info("file " + info + " exists");
 				if (FileChecker.generateMD5(file.toPath()).equals(info.getMD5())) {
@@ -150,14 +156,14 @@ public class Client {
 		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
 		while (true) {
-			Iterator<Path> iter = Files.walk(Paths.get(DIRECTORY)).filter(Files::isRegularFile).iterator();
+			Iterator<Path> iter = Files.walk(Paths.get(directory)).filter(Files::isRegularFile).iterator();
 
 			while (iter.hasNext()) {
 				Path file = (Path) iter.next();
 
 				logger.info("found file " + file);
 
-				String relative = new File(DIRECTORY).toURI().relativize(file.toFile().toURI()).getPath();
+				String relative = new File(directory).toURI().relativize(file.toFile().toURI()).getPath();
 				FileInfo info = new FileInfo(relative, FileChecker.generateMD5(file));
 				oos.writeObject(info);
 				oos.flush();

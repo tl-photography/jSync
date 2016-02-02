@@ -9,7 +9,7 @@
  *                          Version 2.0, January 2004
  *                      http://www.apache.org/licenses/
  */
-package at.tl_photography.jSync.Server;
+package at.tl_photography.jsync.server;
 
 import java.io.IOException;
 import java.io.InputStream;
