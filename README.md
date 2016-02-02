@@ -1,5 +1,7 @@
 # jSync
-Sync large amount of files privately
+Sync large amount of files privately. 
+
+With jSync you can sync large amount of files from on Computer to another. I used that to get around AmazonWorkDocs, wich is painfully slow.
 
 ## Build
 gradle fatServerJar
@@ -18,3 +20,9 @@ gradle fatClientJar
 ### Start the sender client
 
 'java -jar jSync-Client s PATH-TO-SYNC IP/HOST PORT'
+
+
+## ToDo
+- Use SSL
+- Error handling
+- better code...
