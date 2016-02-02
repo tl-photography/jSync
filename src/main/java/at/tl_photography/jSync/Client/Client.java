@@ -1,6 +1,16 @@
+/*
+ *	jSync 
+ *
+ * @author Thomas Leber
+ * @version 0.1
+ * 
+ *
+ *                                  Apache License
+ *                          Version 2.0, January 2004
+ *                      http://www.apache.org/licenses/
+ */
 package at.tl_photography.jSync.Client;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,15 +26,13 @@ import java.util.logging.Logger;
 
 import at.tl_photography.jSync.Common.FileChecker;
 import at.tl_photography.jSync.Common.FileInfo;
-import at.tl_photography.jSync.Server.Server;
-import sun.dc.pr.PathStroker;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Client.
  */
 public class Client {
 
+	/** The logger. */
 	private static Logger logger = Logger.getLogger(Client.class.getName());
 
 	/** The host. */
@@ -47,14 +55,19 @@ public class Client {
 	 */
 	public static void main(String[] args) {
 		try {
+			// open socket
 			socket = new Socket(HOST, PORT);
 
+			// parse args
 			DIRECTORY = args[1];
+			HOST = args[2];
+			PORT = Integer.parseInt(args[3]);
 
+			// sender or receiver
 			if (args[0].equals("s")) {
 				sendFiles();
 			} else {
-				recieveFiles();
+				receiveFiles();
 			}
 
 		} catch (IOException e) {
@@ -73,8 +86,9 @@ public class Client {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
-	private static void recieveFiles() throws IOException, ClassNotFoundException {
+	private static void receiveFiles() throws IOException, ClassNotFoundException {
 
 		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -105,12 +119,12 @@ public class Client {
 			}
 
 			System.out.println(file.getParentFile());
-			
+
 			file.getParentFile().mkdirs();
 
 			FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
 
-			byte[] buffer = new byte[1024]; // Adjust if you want
+			byte[] buffer = new byte[1024];
 			int bytesRead;
 
 			while ((bytesRead = ois.read(buffer)) != -1) {
@@ -152,7 +166,7 @@ public class Client {
 					logger.info("file " + file + " does not exsist on the other side");
 					FileInputStream fis = new FileInputStream(file.toFile());
 
-					byte[] buffer = new byte[1024]; // Adjust if you want
+					byte[] buffer = new byte[1024];
 					int bytesRead;
 
 					while ((bytesRead = fis.read(buffer)) != -1) {

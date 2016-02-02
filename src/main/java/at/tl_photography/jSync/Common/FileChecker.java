@@ -1,3 +1,14 @@
+/*
+ *	jSync 
+ *
+ * @author Thomas Leber
+ * @version 0.1
+ * 
+ *
+ *                                  Apache License
+ *                          Version 2.0, January 2004
+ *                      http://www.apache.org/licenses/
+ */
 package at.tl_photography.jSync.Common;
 
 import java.io.FileInputStream;
@@ -7,7 +18,6 @@ import java.nio.file.Path;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FileChecker.
  */

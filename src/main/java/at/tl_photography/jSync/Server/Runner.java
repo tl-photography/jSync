@@ -1,3 +1,14 @@
+/*
+ *	jSync 
+ *
+ * @author Thomas Leber
+ * @version 0.1
+ * 
+ *
+ *                                  Apache License
+ *                          Version 2.0, January 2004
+ *                      http://www.apache.org/licenses/
+ */
 package at.tl_photography.jSync.Server;
 
 import java.io.IOException;
@@ -5,12 +16,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Runner.
  */
 public class Runner implements Runnable {
-	
+
 	/** The logger. */
 	private static Logger logger = Logger.getLogger(Runner.class.getName());
 	/** The in. */
@@ -67,7 +77,8 @@ public class Runner implements Runnable {
 	/**
 	 * Disconnect.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public void disconnect() throws IOException {
 		connected = false;

@@ -1,3 +1,14 @@
+/*
+ *	jSync 
+ *
+ * @author Thomas Leber
+ * @version 0.1
+ * 
+ *
+ *                                  Apache License
+ *                          Version 2.0, January 2004
+ *                      http://www.apache.org/licenses/
+ */
 package at.tl_photography.jSync.Server;
 
 import java.io.IOException;
@@ -5,15 +16,38 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.*;
 
+/**
+ * The Class Server.
+ */
 public class Server {
 
+	/** The logger. */
 	private static Logger logger = Logger.getLogger(Server.class.getName());
+
+	/** The runner1. */
 	private static Runner runner1;
+
+	/** The runner2. */
 	private static Runner runner2;
 
+	/** The port. */
+	private static Integer PORT = 81;
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		ServerSocket serversocket = new ServerSocket(81);
+		PORT = Integer.parseInt(args[3]);
+
+		ServerSocket serversocket = new ServerSocket(PORT);
 		logger.info("server socket open, waiting for clients");
 
 		while (true) {
@@ -47,6 +81,5 @@ public class Server {
 				}
 			}
 		}
-
 	}
 }
