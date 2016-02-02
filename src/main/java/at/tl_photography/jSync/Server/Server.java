@@ -45,7 +45,7 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		PORT = Integer.parseInt(args[3]);
+		PORT = Integer.parseInt(args[0]);
 
 		ServerSocket serversocket = new ServerSocket(PORT);
 		logger.info("server socket open, waiting for clients");
