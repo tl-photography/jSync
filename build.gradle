@@ -6,6 +6,7 @@ apply plugin: 'maven'
 
 dependencies {
   compile group: 'commons-io', name: 'commons-io', version: '2.4'
+  compile 'commons-codec:commons-codec:1.5'
 }
 
 repositories {   
