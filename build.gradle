@@ -1,24 +1,61 @@
 def projectName = 'jSync'
+def version = '0.1'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 dependencies {
-  compile group: 'commons-io', name: 'commons-io', version: '2.4'
+	compile group: 'commons-io', name: 'commons-io', version: '2.4'
+	compile 'commons-codec:commons-codec:1.5'
 }
 
-repositories {   
-    mavenCentral()
-}
+repositories {    mavenCentral() }
 
 eclipse {
 
 	build
-	
-    classpath {
-       downloadSources=true
-       downloadJavadoc=true
-       sourceCompatibility = 1.8
-    }
+
+	classpath {
+		downloadSources=true
+		downloadJavadoc=true
+		sourceCompatibility = 1.8
+	}
 }
+
+task fatServerJar(type: Jar) {
+	manifest {
+		attributes 	'Implementation-Title': 'jSync Server',
+		'Implementation-Version': version,
+		'Main-Class': 'at.tl_photography.jSync.Server.Server'
+	}
+	baseName = project.name + '-Server'
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+	with jar
+}
+
+task fatClientJar(type: Jar) {
+	manifest {
+		attributes 	'Implementation-Title': 'jSync Client',
+		'Implementation-Version': version,
+		'Main-Class': 'at.tl_photography.jSync.Client.Client'
+	}
+	baseName = project.name + '-Client'
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+	with jar
+}
+
+task all {
+	eclipse
+	fatServerJar
+	fatClientJar
+}
+
