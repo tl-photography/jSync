@@ -1,5 +1,5 @@
 # jSync
-Sync large amount of files privately. 
+Sync large amount of files privately between two PCs who have no public adsress via a public server. 
 
 With jSync you can sync large amount of files from on Computer to another. I used that to get around AmazonWorkDocs, which is painfully slow.
 
