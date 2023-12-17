@@ -3,11 +3,11 @@ def version = '0.1'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 dependencies {
-	compile group: 'commons-io', name: 'commons-io', version: '2.4'
-	compile 'commons-codec:commons-codec:1.5'
+	implementation group: 'commons-io',    name: 'commons-io',    version: '2.+'
+	implementation group: 'commons-codec', name: 'commons-codec', version: '1.+'
 }
 
 repositories {    mavenCentral() }
@@ -19,19 +19,22 @@ eclipse {
 	classpath {
 		downloadSources=true
 		downloadJavadoc=true
-		sourceCompatibility = 1.8
+		sourceCompatibility = 1.18
 	}
 }
 
 task fatServerJar(type: Jar) {
+  build
+
 	manifest {
 		attributes 	'Implementation-Title': 'jSync Server',
 		'Implementation-Version': version,
 		'Main-Class': 'at.tl_photography.jSync.Server.Server'
 	}
-	baseName = project.name + '-Server'
+	archiveBaseName = project.name + '-Server'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	from {
-		configurations.compile.collect {
+		configurations.runtimeClasspath.collect {
 			it.isDirectory() ? it : zipTree(it)
 		}
 	}
@@ -39,14 +42,17 @@ task fatServerJar(type: Jar) {
 }
 
 task fatClientJar(type: Jar) {
+  build
+
 	manifest {
 		attributes 	'Implementation-Title': 'jSync Client',
 		'Implementation-Version': version,
 		'Main-Class': 'at.tl_photography.jSync.Client.Client'
 	}
-	baseName = project.name + '-Client'
+	archiveBaseName = project.name + '-Client'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	from {
-		configurations.compile.collect {
+		configurations.runtimeClasspath.collect  {
 			it.isDirectory() ? it : zipTree(it)
 		}
 	}
